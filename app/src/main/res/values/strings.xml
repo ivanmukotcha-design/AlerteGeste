@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">AlertGeste</string>
+    <string name="welcome">Bienvenue sur AlertGeste</string>
+    <string name="app_description">Protection discrète par détection de mouvement.</string>
+    
+    <!-- Dashboard -->
+    <string name="surveillance_active">Surveillance Active</string>
+    <string name="surveillance_inactive">Surveillance Inactive</string>
+    <string name="activer_surveillance">Activer la surveillance</string>
+    <string name="desactiver_surveillance">Désactiver la surveillance</string>
+    <string name="historique">Historique</string>
+    <string name="contacts">Contacts</string>
+    <string name="paramètres">Paramètres</string>
+    <string name="configurer_geste">Configurer le geste</string>
+
+    <!-- Inscription / Profil -->
+    <string name="votre_nom">Votre nom</string>
+    <string name="votre_telephone">Votre numéro de téléphone</string>
+    <string name="message_alerte">Message d\'urgence personnalisé</string>
+    <string name="enregistrer">Enregistrer</string>
+    <string name="message_par_defaut">Ceci est une alerte d\'urgence ! J\'ai besoin d\'aide immédiatement.</string>
+
+    <!-- Contacts -->
+    <string name="ajouter_contact">Ajouter un contact de confiance</string>
+    <string name="nom_contact">Nom du contact</string>
+    <string name="tel_contact">Numéro de téléphone</string>
+    <string name="relation_contact">Relation (ex: Frère, Ami)</string>
+    <string name="aucun_contact">Aucun contact enregistré.</string>
+
+    <!-- Geste -->
+    <string name="instruction_geste">Secouez votre téléphone 3 fois fermement pour calibrer la détection.</string>
+    <string name="calibrage_reussi">Calibrage réussi !</string>
+
+    <!-- Alertes -->
+    <string name="alerte_envoyee">Alerte envoyée avec succès</string>
+    <string name="alerte_annulee">Alerte annulée</string>
+    <string name="alerte_echec">Échec de l\'envoi de l\'alerte</string>
+</resources>

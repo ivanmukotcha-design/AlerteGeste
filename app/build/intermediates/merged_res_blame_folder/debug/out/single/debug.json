@@ -1,0 +1,130 @@
+[
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_dialog_add_contact.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\dialog_add_contact.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\drawable_ic_shield.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\drawable\\ic_shield.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_dialog_contact_form.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\dialog_contact_form.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_item_history.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\item_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_fragment_settings.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_item_contact.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\item_contact.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\drawable_ic_check.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\drawable\\ic_check.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "com.butembo.alertgeste.app-merged_res-60:/layout_fragment_gesture.xml.flat",
+        "source": "com.butembo.alertgeste.app-main-62:/layout/fragment_gesture.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_fragment_splash.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_splash.xml"
+    },
+    {
+        "merged": "com.butembo.alertgeste.app-merged_res-60:/layout_fragment_dashboard.xml.flat",
+        "source": "com.butembo.alertgeste.app-main-62:/layout/fragment_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\drawable_ic_cancel.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\drawable\\ic_cancel.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_fragment_dashboard.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\navigation_nav_graph.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\navigation\\nav_graph.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_fragment_contacts.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_contacts.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_fragment_register.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_fragment_history.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\drawable_ic_warning.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\drawable\\ic_warning.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_item_alerte.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\item_alerte.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\layout_fragment_gesture.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_gesture.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-merged_res-60:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\xml\\backup_rules.xml"
+    }
+]

@@ -1,0 +1,62 @@
+[
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\fragment_contacts.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_contacts.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\fragment_gesture.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_gesture.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\fragment_dashboard.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\item_contact.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\item_contact.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\fragment_history.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_history.xml"
+    },
+    {
+        "merged": "com.butembo.alertgeste.app-mergeDebugResources-59:/layout/fragment_gesture.xml",
+        "source": "com.butembo.alertgeste.app-main-62:/layout/fragment_gesture.xml"
+    },
+    {
+        "merged": "com.butembo.alertgeste.app-mergeDebugResources-59:/layout/fragment_dashboard.xml",
+        "source": "com.butembo.alertgeste.app-main-62:/layout/fragment_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\item_history.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\item_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\dialog_contact_form.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\dialog_contact_form.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\fragment_splash.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\fragment_register.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\fragment_settings.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\dialog_add_contact.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\dialog_add_contact.xml"
+    },
+    {
+        "merged": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-mergeDebugResources-59:\\layout\\item_alerte.xml",
+        "source": "C:\\Users\\ivan\\.gradle\\daemon\\8.5\\com.butembo.alertgeste.app-main-62:\\layout\\item_alerte.xml"
+    }
+]

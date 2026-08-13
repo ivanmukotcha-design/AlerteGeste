@@ -1,0 +1,1 @@
+[{"navFile":"src\\main\\res\\navigation\\nav_graph.xml","javaFiles":["com.butembo.alertgeste.ui.splash.SplashFragmentDirections","com.butembo.alertgeste.ui.register.RegisterFragmentDirections","com.butembo.alertgeste.ui.dashboard.DashboardFragmentDirections"]}]
