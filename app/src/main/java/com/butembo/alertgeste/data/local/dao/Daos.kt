@@ -97,8 +97,8 @@ interface AlerteDao {
     @Query("SELECT * FROM sms_parts WHERE id = :id")
     suspend fun getPart(id: String): SmsPart?
 
-    @Query("UPDATE sms_parts SET statut = :status WHERE id = :id AND statut IN ('EN_ATTENTE', 'INCONNU')")
-    suspend fun setPartStatus(id: String, status: String)
+    @Query("UPDATE sms_parts SET statut = :status, failureReason = :failureReason WHERE id = :id AND statut IN ('EN_ATTENTE', 'INCONNU')")
+    suspend fun setPartStatus(id: String, status: String, failureReason: String)
 
     @Query("UPDATE sms_parts SET statut = 'INCONNU' WHERE alerteId = :alertId AND statut = 'EN_ATTENTE'")
     suspend fun expireParts(alertId: Long)

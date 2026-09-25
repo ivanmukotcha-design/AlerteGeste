@@ -46,17 +46,17 @@ public final class AlertGesteDatabase_Impl extends AlertGesteDatabase {
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(2) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(3) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `utilisateurs` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nom` TEXT NOT NULL, `telephone` TEXT NOT NULL, `messageAlerte` TEXT NOT NULL, `surveillanceActive` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `contacts` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nom` TEXT NOT NULL, `telephone` TEXT NOT NULL, `relation` TEXT NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `geste_profils` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `seuilMin` REAL NOT NULL, `seuilMax` REAL NOT NULL, `axeDetection` TEXT NOT NULL, `fenetreTempsMs` INTEGER NOT NULL, `nbRepetitions` INTEGER NOT NULL, `estEnregistre` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `alertes` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `horodatage` INTEGER NOT NULL, `latitude` REAL, `longitude` REAL, `statut` TEXT NOT NULL, `contactsNotifies` TEXT NOT NULL, `detail` TEXT NOT NULL DEFAULT '')");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `sms_parts` (`id` TEXT NOT NULL, `alerteId` INTEGER NOT NULL, `contactId` INTEGER NOT NULL, `nom` TEXT NOT NULL, `telephone` TEXT NOT NULL, `partIndex` INTEGER NOT NULL, `statut` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`alerteId`) REFERENCES `alertes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `sms_parts` (`id` TEXT NOT NULL, `alerteId` INTEGER NOT NULL, `contactId` INTEGER NOT NULL, `nom` TEXT NOT NULL, `telephone` TEXT NOT NULL, `partIndex` INTEGER NOT NULL, `statut` TEXT NOT NULL, `failureReason` TEXT NOT NULL DEFAULT '', PRIMARY KEY(`id`), FOREIGN KEY(`alerteId`) REFERENCES `alertes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_sms_parts_alerteId` ON `sms_parts` (`alerteId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa18ff24d955217642b2a69c45a3cec9')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6b8d0e950a625547e12ee8ed0f5305fa')");
       }
 
       @Override
@@ -173,7 +173,7 @@ public final class AlertGesteDatabase_Impl extends AlertGesteDatabase {
                   + " Expected:\n" + _infoAlertes + "\n"
                   + " Found:\n" + _existingAlertes);
         }
-        final HashMap<String, TableInfo.Column> _columnsSmsParts = new HashMap<String, TableInfo.Column>(7);
+        final HashMap<String, TableInfo.Column> _columnsSmsParts = new HashMap<String, TableInfo.Column>(8);
         _columnsSmsParts.put("id", new TableInfo.Column("id", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSmsParts.put("alerteId", new TableInfo.Column("alerteId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSmsParts.put("contactId", new TableInfo.Column("contactId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -181,6 +181,7 @@ public final class AlertGesteDatabase_Impl extends AlertGesteDatabase {
         _columnsSmsParts.put("telephone", new TableInfo.Column("telephone", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSmsParts.put("partIndex", new TableInfo.Column("partIndex", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsSmsParts.put("statut", new TableInfo.Column("statut", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSmsParts.put("failureReason", new TableInfo.Column("failureReason", "TEXT", true, 0, "''", TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysSmsParts = new HashSet<TableInfo.ForeignKey>(1);
         _foreignKeysSmsParts.add(new TableInfo.ForeignKey("alertes", "CASCADE", "NO ACTION", Arrays.asList("alerteId"), Arrays.asList("id")));
         final HashSet<TableInfo.Index> _indicesSmsParts = new HashSet<TableInfo.Index>(1);
@@ -194,7 +195,7 @@ public final class AlertGesteDatabase_Impl extends AlertGesteDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "aa18ff24d955217642b2a69c45a3cec9", "9a32d162290c828cdf1d05e3dbcac830");
+    }, "6b8d0e950a625547e12ee8ed0f5305fa", "7605c0ff91440b5fdd83483e140f12e3");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

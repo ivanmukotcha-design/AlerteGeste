@@ -57,12 +57,14 @@ class SmsResultReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != "com.butembo.alertgeste.SMS_SENT") return
         val id = intent.getStringExtra("part_id") ?: return
-        val sent = resultCode == Activity.RESULT_OK
+        val code = resultCode
+        val sent = code == Activity.RESULT_OK
+        val reason = if (sent) "" else SmsFailure.fromResult(code)
         val pending = goAsync()
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             try {
                 withTimeout(8_000) {
-                    repository.recordPart(id, if (sent) AlertStatus.SENT else AlertStatus.FAILED)?.let { alert ->
+                    repository.recordPart(id, if (sent) AlertStatus.SENT else AlertStatus.FAILED, reason)?.let { alert ->
                         if (alert.statut != AlertStatus.SENDING) AlertNotifications(context).result(alert)
                     }
                 }

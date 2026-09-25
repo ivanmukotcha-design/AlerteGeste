@@ -16,7 +16,7 @@ import com.butembo.alertgeste.data.local.entity.Utilisateur
 
 @Database(
     entities = [Utilisateur::class, Contact::class, GesteProfil::class, Alerte::class, SmsPart::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class AlertGesteDatabase : RoomDatabase() {
@@ -26,6 +26,13 @@ abstract class AlertGesteDatabase : RoomDatabase() {
     abstract fun alerteDao(): AlerteDao
 
     companion object {
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE sms_parts ADD COLUMN failureReason TEXT NOT NULL DEFAULT ''")
+                db.execSQL("UPDATE alertes SET detail = REPLACE(detail, ' destinataire(s) : toutes les parties confirmées par l’opérateur. Réception non confirmée.', ' destinataire(s) avec envoi complet confirmé par Android. Réception non vérifiée.')")
+            }
+        }
+
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE alertes ADD COLUMN detail TEXT NOT NULL DEFAULT ''")

@@ -35,7 +35,7 @@ Un arrêt forcé, le retrait des autorisations ou les restrictions d’un fabric
 View Binding, Navigation Component, Hilt, Coroutines/Flow et Room.
 
 - domain : filtre de gravité, détection des pics, validation et agrégation SMS.
-- data : base version 2, migration depuis la version 1, transactions et repository.
+- data : base version 3, migrations depuis les versions 1 et 2, transactions et repository.
 - service : surveillance, état observable, notifications, localisation bornée et SMS.
 - receiver : démarrage, actions utilisateur et confirmations SMS persistantes.
 - ui : profil, tableau de bord, contacts, calibration, historique et paramètres.
@@ -62,6 +62,8 @@ Tests Android : migration Room, profil unique, recalibrage, reset, callbacks dup
 Aucun test automatisé n’envoie de SMS. Les scénarios radio, capteur et veille nécessitent des appareils réels.
 
 ## Données
+
+Depuis la version 1.6, le résultat distingue explicitement les envois complets confirmés par Android, les échecs, les envois partiels et les confirmations manquantes. Le détail conserve les causes disponibles par destinataire (exception de soumission ou code de retour Android), sans déduire le solde de crédit. Les doublons de callbacks ne remplacent pas une cause déjà enregistrée. La migration conserve les données et retire la phrase trompeuse « toutes les parties confirmées » des anciennes alertes ; les anciennes causes perdues ne peuvent pas être reconstituées. Aucun renvoi automatique ni accusé de réception n’est ajouté.
 
 Depuis la version 1.5, chaque alerte terminée peut être supprimée depuis la corbeille de l’historique, après confirmation. Les alertes en cours de préparation ou d’envoi sont protégées jusque dans la base de données. La liste se rafraîchit automatiquement ; la suppression efface aussi le suivi local des parties SMS, sans effacer les SMS chez les destinataires. Cette fonction ne demande aucune permission supplémentaire.
 

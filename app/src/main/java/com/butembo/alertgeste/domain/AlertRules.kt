@@ -24,6 +24,20 @@ object AlertStatus {
         else -> FAILED
     }
 
+    fun summary(status: String, sent: Int, total: Int): String {
+        val count = if (sent == 0) "Aucun envoi complet confirmé (0/$total destinataire(s))."
+            else "$sent/$total destinataire(s) avec envoi complet confirmé par Android."
+        val result = when (status) {
+            SENDING -> "Envoi encore en cours."
+            SENT -> "Réception non vérifiée."
+            FAILED -> "Échec signalé lors de l’envoi."
+            PARTIAL -> "Certaines parties ont été envoyées, d’autres ont échoué. Réception non vérifiée."
+            UNKNOWN -> "Certaines confirmations d’envoi ne sont pas parvenues. Le résultat reste inconnu."
+            else -> label(status)
+        }
+        return "$count $result"
+    }
+
     fun label(status: String): String = when (status) {
         COUNTDOWN -> "Annulation possible"
         LOCATING -> "Recherche de position"

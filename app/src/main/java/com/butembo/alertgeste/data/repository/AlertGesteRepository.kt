@@ -67,11 +67,11 @@ class AlertGesteRepository @Inject constructor(private val db: AlertGesteDatabas
     suspend fun setLocation(id: Long, latitude: Double?, longitude: Double?) = alerts.setLocation(id, latitude, longitude)
     suspend fun prepareParts(id: Long, parts: List<SmsPart>) = db.withTransaction {
         alerts.insertParts(parts)
-        alerts.setStatus(id, AlertStatus.SENDING, "En attente de confirmation de l’opérateur.")
+        alerts.setStatus(id, AlertStatus.SENDING, "En attente du résultat d’envoi Android.")
     }
-    suspend fun recordPart(id: String, status: String): Alerte? = db.withTransaction {
+    suspend fun recordPart(id: String, status: String, failureReason: String = ""): Alerte? = db.withTransaction {
         val part = alerts.getPart(id) ?: return@withTransaction null
-        alerts.setPartStatus(id, status)
+        alerts.setPartStatus(id, status, if (status == AlertStatus.FAILED) failureReason.take(240) else "")
         refreshResult(part.alerteId)
     }
     private suspend fun refreshResult(id: Long): Alerte? {
@@ -81,7 +81,15 @@ class AlertGesteRepository @Inject constructor(private val db: AlertGesteDatabas
         val sent = groups.filter { group -> group.all { it.statut == AlertStatus.SENT } }
         val status = AlertStatus.aggregate(parts.map { it.statut })
         alerts.setContacts(id, sent.joinToString(", ") { it.first().nom })
-        alerts.setStatus(id, status, "${sent.size}/${groups.size} destinataire(s) : toutes les parties confirmées par l’opérateur. Réception non confirmée.")
+        val detail = buildString {
+            append(AlertStatus.summary(status, sent.size, groups.size))
+            groups.forEach { group ->
+                val errors = group.filter { it.statut == AlertStatus.FAILED }
+                    .map { it.failureReason.ifBlank { "Échec signalé ; cause non disponible." } }.distinct()
+                errors.forEach { reason -> append("\n${group.first().nom} : $reason") }
+            }
+        }
+        alerts.setStatus(id, status, detail)
         return alerts.getAlerte(id)
     }
     suspend fun expireAlert(id: Long): Alerte? = db.withTransaction {

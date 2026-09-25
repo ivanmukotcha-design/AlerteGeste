@@ -100,6 +100,64 @@ class DatabaseTest {
         } finally { db.close() }
     }
 
+    @Test fun failureReasonsSurviveOtherCallbacksWithoutTurningZeroIntoSuccess() = runBlocking {
+        val db = Room.inMemoryDatabaseBuilder(context, AlertGesteDatabase::class.java).build()
+        try {
+            val repo = AlertGesteRepository(db)
+            val id = repo.enregistrerAlerte(Alerte(latitude = null, longitude = null, statut = AlertStatus.COUNTDOWN, contactsNotifies = ""))
+            repo.prepareParts(id, listOf(SmsPart("a", id, 1, "Test", "123456789", 0), SmsPart("b", id, 1, "Test", "123456789", 1)))
+            repo.recordPart("a", AlertStatus.FAILED, "Envoi refusé : getGroupIdLevel1")
+            repo.recordPart("a", AlertStatus.SENT) // a duplicate cannot erase the original failure
+            repo.expireAlert(id)
+            assertTrue(repo.getAlerte(id)!!.detail.contains("getGroupIdLevel1"))
+            repo.recordPart("b", AlertStatus.FAILED, "Réseau indisponible")
+            val failed = repo.getAlerte(id)!!
+            assertEquals(AlertStatus.FAILED, failed.statut)
+            assertTrue(failed.contactsNotifies.isEmpty())
+            assertTrue(failed.detail.contains("Aucun envoi complet confirmé (0/1"))
+            assertTrue(failed.detail.contains("getGroupIdLevel1"))
+            assertTrue(failed.detail.contains("Réseau indisponible"))
+            assertEquals("Envoi refusé : getGroupIdLevel1", db.alerteDao().getPart("a")!!.failureReason)
+        } finally { db.close() }
+    }
+
+    @Test fun migrationPreservesV2HistoryAndCorrectsMisleadingText() = runBlocking {
+        val name = "migration-v2-test.db"
+        context.deleteDatabase(name)
+        val path = context.getDatabasePath(name)
+        path.parentFile!!.mkdirs()
+        SQLiteDatabase.openOrCreateDatabase(path, null).use { old ->
+            old.execSQL("CREATE TABLE utilisateurs (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nom TEXT NOT NULL, telephone TEXT NOT NULL, messageAlerte TEXT NOT NULL, surveillanceActive INTEGER NOT NULL)")
+            old.execSQL("CREATE TABLE contacts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nom TEXT NOT NULL, telephone TEXT NOT NULL, relation TEXT NOT NULL)")
+            old.execSQL("CREATE TABLE geste_profils (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, seuilMin REAL NOT NULL, seuilMax REAL NOT NULL, axeDetection TEXT NOT NULL, fenetreTempsMs INTEGER NOT NULL, nbRepetitions INTEGER NOT NULL, estEnregistre INTEGER NOT NULL)")
+            old.execSQL("CREATE TABLE alertes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, horodatage INTEGER NOT NULL, latitude REAL, longitude REAL, statut TEXT NOT NULL, contactsNotifies TEXT NOT NULL, detail TEXT NOT NULL DEFAULT '')")
+            old.execSQL("CREATE TABLE sms_parts (id TEXT NOT NULL PRIMARY KEY, alerteId INTEGER NOT NULL, contactId INTEGER NOT NULL, nom TEXT NOT NULL, telephone TEXT NOT NULL, partIndex INTEGER NOT NULL, statut TEXT NOT NULL, FOREIGN KEY(alerteId) REFERENCES alertes(id) ON DELETE CASCADE)")
+            old.execSQL("CREATE INDEX index_sms_parts_alerteId ON sms_parts(alerteId)")
+            old.execSQL("INSERT INTO utilisateurs VALUES (1,'Alice','123456789','Au secours',0)")
+            old.execSQL("INSERT INTO contacts VALUES (1,'Bob','987654321','Ami')")
+            old.execSQL("INSERT INTO geste_profils VALUES (1,5,20,'resultante',2500,3,1)")
+            old.execSQL("INSERT INTO alertes VALUES (1,1234,NULL,NULL,'ECHEC','',?)", arrayOf("0/1 destinataire(s) : toutes les parties confirmées par l’opérateur. Réception non confirmée."))
+            old.execSQL("INSERT INTO sms_parts VALUES ('old',1,1,'Bob','987654321',0,'ECHEC')")
+            old.version = 2
+        }
+        val db = Room.databaseBuilder(context, AlertGesteDatabase::class.java, name)
+            .addMigrations(AlertGesteDatabase.MIGRATION_2_3).build()
+        try {
+            val repo = AlertGesteRepository(db)
+            assertEquals("Alice", repo.getUtilisateurOnce()!!.nom)
+            assertEquals(1, repo.getTousContactsOnce().size)
+            assertEquals(2500L, repo.getProfilActif().first()!!.fenetreTempsMs)
+            val alert = repo.getAlerte(1)!!
+            assertEquals(AlertStatus.FAILED, alert.statut)
+            assertTrue(alert.detail.startsWith("0/1 destinataire(s) avec envoi complet"))
+            assertFalse(alert.detail.contains("toutes les parties"))
+            assertEquals("", db.alerteDao().getPart("old")!!.failureReason)
+            repo.prepareParts(1, listOf(SmsPart("new", 1, 1, "Bob", "987654321", 1)))
+            repo.recordPart("new", AlertStatus.FAILED, "Nouvelle cause")
+            assertTrue(repo.getAlerte(1)!!.detail.contains("Nouvelle cause"))
+        } finally { db.close(); context.deleteDatabase(name) }
+    }
+
     @Test fun migrationPreservesV1DataAndSelectsLatestCalibration() = runBlocking {
         val name = "migration-test.db"
         context.deleteDatabase(name)
@@ -119,7 +177,7 @@ class DatabaseTest {
             old.version = 1
         }
         val db = Room.databaseBuilder(context, AlertGesteDatabase::class.java, name)
-            .addMigrations(AlertGesteDatabase.MIGRATION_1_2).build()
+            .addMigrations(AlertGesteDatabase.MIGRATION_1_2, AlertGesteDatabase.MIGRATION_2_3).build()
         try {
             val repo = AlertGesteRepository(db)
             assertEquals("Alice", repo.getUtilisateurOnce()!!.nom)

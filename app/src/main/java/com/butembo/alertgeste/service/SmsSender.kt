@@ -15,6 +15,7 @@ import com.butembo.alertgeste.domain.SmsText
 import com.butembo.alertgeste.receiver.SmsResultReceiver
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.CancellationException
 import java.util.UUID
 
 class SmsSender(private val context: Context, private val repository: AlertGesteRepository) {
@@ -50,8 +51,11 @@ class SmsSender(private val context: Context, private val repository: AlertGeste
             })
             try {
                 sms.sendMultipartTextMessage(contact.telephone, null, textParts, callbacks, null)
-            } catch (_: Exception) {
-                parts.forEach { repository.recordPart(it.id, AlertStatus.FAILED) }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                val reason = SmsFailure.fromException(error)
+                parts.forEach { repository.recordPart(it.id, AlertStatus.FAILED, reason) }
                 callbacks.forEach { it.cancel() }
             }
         }

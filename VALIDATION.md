@@ -1,4 +1,32 @@
-# Validation technique — version 1.5 — 25 septembre 2026
+# Validation technique — version 1.6 — 25 septembre 2026
+
+VersionCode 7. Correction du compte rendu ambigu « 0/1 destinataire(s) : toutes les parties confirmées ». Zéro destinataire confirmé est maintenant indiqué explicitement ; les résultats en cours, partiels, inconnus et échoués restent distincts. Une confirmation d’envoi Android ne devient pas une confirmation de réception.
+
+Les exceptions pendant la soumission à Android et les codes de retour d’échec sont conservés par partie SMS, puis affichés par destinataire. Aucun diagnostic de crédit insuffisant n’est déduit d’une erreur générique. Les confirmations tardives et dupliquées conservent leurs règles précédentes. Aucun renvoi automatique, aucune transmission de test et aucune permission supplémentaire.
+
+Room passe de la version 2 à la version 3 avec une colonne failureReason. Les migrations 1→2→3 et 2→3 préservent profil, contacts, geste et historique ; le texte trompeur des anciennes alertes est rectifié. Les causes qui n’avaient pas été conservées restent irrécupérables.
+
+## Vérifications de la version 1.6
+
+- Builds debug, release, APK AndroidTest et AAB réussis.
+- 46 tests JVM réussis, dont les nouveaux cas 0/1, envoi partiel, résultat inconnu, exception de sécurité et code Android générique.
+- Lint debug/release : 0 erreur, 98 avertissements par variante.
+- 7 tests DatabaseTest réussis sur le Pixel 7a. Bases fictives uniquement ; vérification des deux chemins de migration, des erreurs persistantes, des callbacks dupliqués et de la suppression.
+- Rapport : app/build/reports/sms-diagnostics-device.txt.
+- Installation en mise à jour de la version 1.6 avec conservation des données, suppression du seul paquet temporaire de tests, puis réouverture de l’application.
+- Surveillance arrêtée après ces opérations : réactivation manuelle nécessaire.
+
+La cause du non-envoi réel signalé par l’utilisateur reste à identifier. Un nouvel essai utilisateur doit fournir le détail d’erreur maintenant conservé ; les tests exécutés ne valident pas la transmission radio ni la réception chez les contacts.
+
+## APK de test actuel
+
+AlertGeste-1.6-test.apk, à la racine du projet : 6 582 157 octets. Copie vérifiée de app/build/outputs/apk/debug/app-debug.apk, signée avec la clé debug.
+
+SHA-256 : 92835FF24202C19BA89E168AAA8500A923605A7A0060EB8C2E1A8CC9482E6E78.
+
+Les builds release actuels restent non signés. Les mesures et empreintes des sections archivées ci-dessous concernent leurs versions respectives ; les sorties de compilation ont été remplacées par la version 1.6.
+
+## Archive de validation 1.5
 
 VersionCode 6. Ajout de la suppression individuelle dans l’historique : corbeille accessible, confirmation avec date, retour de succès ou d’erreur et rafraîchissement automatique de la liste, y compris lorsqu’elle devient vide. Aucune dépendance ni permission supplémentaire.
 

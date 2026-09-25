@@ -61,5 +61,6 @@ data class SmsPart(
     val nom: String,
     val telephone: String,
     val partIndex: Int,
-    val statut: String = "EN_ATTENTE"
+    val statut: String = "EN_ATTENTE",
+    @ColumnInfo(defaultValue = "''") val failureReason: String = ""
 )

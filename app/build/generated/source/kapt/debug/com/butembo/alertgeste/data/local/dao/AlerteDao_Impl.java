@@ -104,7 +104,7 @@ public final class AlerteDao_Impl implements AlerteDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR ABORT INTO `sms_parts` (`id`,`alerteId`,`contactId`,`nom`,`telephone`,`partIndex`,`statut`) VALUES (?,?,?,?,?,?,?)";
+        return "INSERT OR ABORT INTO `sms_parts` (`id`,`alerteId`,`contactId`,`nom`,`telephone`,`partIndex`,`statut`,`failureReason`) VALUES (?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -132,6 +132,11 @@ public final class AlerteDao_Impl implements AlerteDao {
           statement.bindNull(7);
         } else {
           statement.bindString(7, entity.getStatut());
+        }
+        if (entity.getFailureReason() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, entity.getFailureReason());
         }
       }
     };
@@ -163,7 +168,7 @@ public final class AlerteDao_Impl implements AlerteDao {
       @Override
       @NonNull
       public String createQuery() {
-        final String _query = "UPDATE sms_parts SET statut = ? WHERE id = ? AND statut IN ('EN_ATTENTE', 'INCONNU')";
+        final String _query = "UPDATE sms_parts SET statut = ?, failureReason = ? WHERE id = ? AND statut IN ('EN_ATTENTE', 'INCONNU')";
         return _query;
       }
     };
@@ -355,7 +360,7 @@ public final class AlerteDao_Impl implements AlerteDao {
   }
 
   @Override
-  public Object setPartStatus(final String id, final String status,
+  public Object setPartStatus(final String id, final String status, final String failureReason,
       final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
@@ -369,6 +374,12 @@ public final class AlerteDao_Impl implements AlerteDao {
           _stmt.bindString(_argIndex, status);
         }
         _argIndex = 2;
+        if (failureReason == null) {
+          _stmt.bindNull(_argIndex);
+        } else {
+          _stmt.bindString(_argIndex, failureReason);
+        }
+        _argIndex = 3;
         if (id == null) {
           _stmt.bindNull(_argIndex);
         } else {
@@ -742,6 +753,7 @@ public final class AlerteDao_Impl implements AlerteDao {
           final int _cursorIndexOfTelephone = CursorUtil.getColumnIndexOrThrow(_cursor, "telephone");
           final int _cursorIndexOfPartIndex = CursorUtil.getColumnIndexOrThrow(_cursor, "partIndex");
           final int _cursorIndexOfStatut = CursorUtil.getColumnIndexOrThrow(_cursor, "statut");
+          final int _cursorIndexOfFailureReason = CursorUtil.getColumnIndexOrThrow(_cursor, "failureReason");
           final List<SmsPart> _result = new ArrayList<SmsPart>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final SmsPart _item;
@@ -775,7 +787,13 @@ public final class AlerteDao_Impl implements AlerteDao {
             } else {
               _tmpStatut = _cursor.getString(_cursorIndexOfStatut);
             }
-            _item = new SmsPart(_tmpId,_tmpAlerteId,_tmpContactId,_tmpNom,_tmpTelephone,_tmpPartIndex,_tmpStatut);
+            final String _tmpFailureReason;
+            if (_cursor.isNull(_cursorIndexOfFailureReason)) {
+              _tmpFailureReason = null;
+            } else {
+              _tmpFailureReason = _cursor.getString(_cursorIndexOfFailureReason);
+            }
+            _item = new SmsPart(_tmpId,_tmpAlerteId,_tmpContactId,_tmpNom,_tmpTelephone,_tmpPartIndex,_tmpStatut,_tmpFailureReason);
             _result.add(_item);
           }
           return _result;
@@ -811,6 +829,7 @@ public final class AlerteDao_Impl implements AlerteDao {
           final int _cursorIndexOfTelephone = CursorUtil.getColumnIndexOrThrow(_cursor, "telephone");
           final int _cursorIndexOfPartIndex = CursorUtil.getColumnIndexOrThrow(_cursor, "partIndex");
           final int _cursorIndexOfStatut = CursorUtil.getColumnIndexOrThrow(_cursor, "statut");
+          final int _cursorIndexOfFailureReason = CursorUtil.getColumnIndexOrThrow(_cursor, "failureReason");
           final SmsPart _result;
           if (_cursor.moveToFirst()) {
             final String _tmpId;
@@ -843,7 +862,13 @@ public final class AlerteDao_Impl implements AlerteDao {
             } else {
               _tmpStatut = _cursor.getString(_cursorIndexOfStatut);
             }
-            _result = new SmsPart(_tmpId,_tmpAlerteId,_tmpContactId,_tmpNom,_tmpTelephone,_tmpPartIndex,_tmpStatut);
+            final String _tmpFailureReason;
+            if (_cursor.isNull(_cursorIndexOfFailureReason)) {
+              _tmpFailureReason = null;
+            } else {
+              _tmpFailureReason = _cursor.getString(_cursorIndexOfFailureReason);
+            }
+            _result = new SmsPart(_tmpId,_tmpAlerteId,_tmpContactId,_tmpNom,_tmpTelephone,_tmpPartIndex,_tmpStatut,_tmpFailureReason);
           } else {
             _result = null;
           }
