@@ -7,35 +7,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 import com.butembo.alertgeste.data.local.AlertGesteDatabase;
-import com.butembo.alertgeste.data.local.dao.AlerteDao;
-import com.butembo.alertgeste.data.local.dao.ContactDao;
-import com.butembo.alertgeste.data.local.dao.GesteProfilDao;
-import com.butembo.alertgeste.data.local.dao.UtilisateurDao;
 import com.butembo.alertgeste.data.repository.AlertGesteRepository;
-import com.butembo.alertgeste.di.AppModule_ProvideAlerteDaoFactory;
-import com.butembo.alertgeste.di.AppModule_ProvideContactDaoFactory;
 import com.butembo.alertgeste.di.AppModule_ProvideDatabaseFactory;
-import com.butembo.alertgeste.di.AppModule_ProvideGesteProfilDaoFactory;
-import com.butembo.alertgeste.di.AppModule_ProvideUtilisateurDaoFactory;
 import com.butembo.alertgeste.receiver.BootReceiver;
 import com.butembo.alertgeste.receiver.BootReceiver_MembersInjector;
+import com.butembo.alertgeste.receiver.SmsResultReceiver;
+import com.butembo.alertgeste.receiver.SmsResultReceiver_MembersInjector;
 import com.butembo.alertgeste.service.SurveillanceService;
 import com.butembo.alertgeste.service.SurveillanceService_MembersInjector;
 import com.butembo.alertgeste.ui.MainActivity;
 import com.butembo.alertgeste.ui.contacts.ContactFormDialog;
 import com.butembo.alertgeste.ui.contacts.ContactsFragment;
-import com.butembo.alertgeste.ui.contacts.ContactsFragment_MembersInjector;
 import com.butembo.alertgeste.ui.contacts.ContactsViewModel;
 import com.butembo.alertgeste.ui.contacts.ContactsViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.butembo.alertgeste.ui.dashboard.DashboardFragment;
-import com.butembo.alertgeste.ui.dashboard.DashboardFragment_MembersInjector;
 import com.butembo.alertgeste.ui.dashboard.DashboardViewModel;
 import com.butembo.alertgeste.ui.dashboard.DashboardViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.butembo.alertgeste.ui.gesture.GestureFragment;
 import com.butembo.alertgeste.ui.gesture.GestureViewModel;
 import com.butembo.alertgeste.ui.gesture.GestureViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.butembo.alertgeste.ui.history.HistoryFragment;
-import com.butembo.alertgeste.ui.history.HistoryFragment_MembersInjector;
 import com.butembo.alertgeste.ui.history.HistoryViewModel;
 import com.butembo.alertgeste.ui.history.HistoryViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.butembo.alertgeste.ui.register.RegisterFragment;
@@ -358,12 +349,10 @@ public final class DaggerAlertGesteApp_HiltComponents_SingletonC {
 
     @Override
     public void injectContactsFragment(ContactsFragment contactsFragment) {
-      injectContactsFragment2(contactsFragment);
     }
 
     @Override
     public void injectDashboardFragment(DashboardFragment dashboardFragment) {
-      injectDashboardFragment2(dashboardFragment);
     }
 
     @Override
@@ -372,7 +361,6 @@ public final class DaggerAlertGesteApp_HiltComponents_SingletonC {
 
     @Override
     public void injectHistoryFragment(HistoryFragment historyFragment) {
-      injectHistoryFragment2(historyFragment);
     }
 
     @Override
@@ -398,24 +386,6 @@ public final class DaggerAlertGesteApp_HiltComponents_SingletonC {
     @Override
     public ViewWithFragmentComponentBuilder viewWithFragmentComponentBuilder() {
       return new ViewWithFragmentCBuilder(singletonCImpl, activityRetainedCImpl, activityCImpl, fragmentCImpl);
-    }
-
-    @CanIgnoreReturnValue
-    private ContactsFragment injectContactsFragment2(ContactsFragment instance) {
-      ContactsFragment_MembersInjector.injectRepository(instance, singletonCImpl.alertGesteRepositoryProvider.get());
-      return instance;
-    }
-
-    @CanIgnoreReturnValue
-    private DashboardFragment injectDashboardFragment2(DashboardFragment instance) {
-      DashboardFragment_MembersInjector.injectRepository(instance, singletonCImpl.alertGesteRepositoryProvider.get());
-      return instance;
-    }
-
-    @CanIgnoreReturnValue
-    private HistoryFragment injectHistoryFragment2(HistoryFragment instance) {
-      HistoryFragment_MembersInjector.injectRepository(instance, singletonCImpl.alertGesteRepositoryProvider.get());
-      return instance;
     }
 
     @CanIgnoreReturnValue
@@ -697,22 +667,6 @@ public final class DaggerAlertGesteApp_HiltComponents_SingletonC {
 
     }
 
-    private UtilisateurDao utilisateurDao() {
-      return AppModule_ProvideUtilisateurDaoFactory.provideUtilisateurDao(provideDatabaseProvider.get());
-    }
-
-    private ContactDao contactDao() {
-      return AppModule_ProvideContactDaoFactory.provideContactDao(provideDatabaseProvider.get());
-    }
-
-    private GesteProfilDao gesteProfilDao() {
-      return AppModule_ProvideGesteProfilDaoFactory.provideGesteProfilDao(provideDatabaseProvider.get());
-    }
-
-    private AlerteDao alerteDao() {
-      return AppModule_ProvideAlerteDaoFactory.provideAlerteDao(provideDatabaseProvider.get());
-    }
-
     @SuppressWarnings("unchecked")
     private void initialize(final ApplicationContextModule applicationContextModuleParam) {
       this.provideDatabaseProvider = DoubleCheck.provider(new SwitchingProvider<AlertGesteDatabase>(singletonCImpl, 1));
@@ -726,6 +680,11 @@ public final class DaggerAlertGesteApp_HiltComponents_SingletonC {
     @Override
     public void injectBootReceiver(BootReceiver bootReceiver) {
       injectBootReceiver2(bootReceiver);
+    }
+
+    @Override
+    public void injectSmsResultReceiver(SmsResultReceiver smsResultReceiver) {
+      injectSmsResultReceiver2(smsResultReceiver);
     }
 
     @Override
@@ -749,6 +708,12 @@ public final class DaggerAlertGesteApp_HiltComponents_SingletonC {
       return instance;
     }
 
+    @CanIgnoreReturnValue
+    private SmsResultReceiver injectSmsResultReceiver2(SmsResultReceiver instance) {
+      SmsResultReceiver_MembersInjector.injectRepository(instance, alertGesteRepositoryProvider.get());
+      return instance;
+    }
+
     private static final class SwitchingProvider<T> implements Provider<T> {
       private final SingletonCImpl singletonCImpl;
 
@@ -764,7 +729,7 @@ public final class DaggerAlertGesteApp_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.butembo.alertgeste.data.repository.AlertGesteRepository 
-          return (T) new AlertGesteRepository(singletonCImpl.utilisateurDao(), singletonCImpl.contactDao(), singletonCImpl.gesteProfilDao(), singletonCImpl.alerteDao());
+          return (T) new AlertGesteRepository(singletonCImpl.provideDatabaseProvider.get());
 
           case 1: // com.butembo.alertgeste.data.local.AlertGesteDatabase 
           return (T) AppModule_ProvideDatabaseFactory.provideDatabase(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));

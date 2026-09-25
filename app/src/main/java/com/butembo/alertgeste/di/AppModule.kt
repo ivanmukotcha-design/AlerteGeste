@@ -25,7 +25,7 @@ object AppModule {
             context,
             AlertGesteDatabase::class.java,
             "alertgeste_db"
-        ).build()
+        ).addMigrations(AlertGesteDatabase.MIGRATION_1_2).build()
     }
 
     @Provides

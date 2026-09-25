@@ -72,8 +72,7 @@ public final class GesteProfilDao_Impl implements GesteProfilDao {
   }
 
   @Override
-  public Object insertProfil(final GesteProfil profil,
-      final Continuation<? super Unit> $completion) {
+  public Object insertProfil(final GesteProfil profil, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -87,11 +86,11 @@ public final class GesteProfilDao_Impl implements GesteProfilDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object clearProfils(final Continuation<? super Unit> $completion) {
+  public Object clearProfils(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -110,12 +109,12 @@ public final class GesteProfilDao_Impl implements GesteProfilDao {
           __preparedStmtOfClearProfils.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
   public Flow<GesteProfil> getProfilActif() {
-    final String _sql = "SELECT * FROM geste_profils LIMIT 1";
+    final String _sql = "SELECT * FROM geste_profils ORDER BY id DESC LIMIT 1";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"geste_profils"}, new Callable<GesteProfil>() {
       @Override

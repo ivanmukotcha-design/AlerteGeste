@@ -18,6 +18,11 @@ class ContactsViewModel @Inject constructor(
     val contacts = repository.getTousContacts()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    suspend fun save(contact: Contact) {
+        if (contact.id == 0L) repository.ajouterContact(contact) else repository.mettreAJourContact(contact)
+    }
+    suspend fun delete(contact: Contact) = repository.supprimerContact(contact)
+
     fun ajouterContact(contact: Contact) {
         viewModelScope.launch { repository.ajouterContact(contact) }
     }

@@ -15,6 +15,7 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import com.butembo.alertgeste.data.local.entity.Contact;
 import java.lang.Class;
 import java.lang.Exception;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -124,7 +125,7 @@ public final class ContactDao_Impl implements ContactDao {
   }
 
   @Override
-  public Object insertContact(final Contact contact, final Continuation<? super Unit> $completion) {
+  public Object insertContact(final Contact contact, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -138,11 +139,11 @@ public final class ContactDao_Impl implements ContactDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteContact(final Contact contact, final Continuation<? super Unit> $completion) {
+  public Object deleteContact(final Contact contact, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -156,11 +157,11 @@ public final class ContactDao_Impl implements ContactDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object updateContact(final Contact contact, final Continuation<? super Unit> $completion) {
+  public Object updateContact(final Contact contact, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -174,11 +175,11 @@ public final class ContactDao_Impl implements ContactDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object clearContacts(final Continuation<? super Unit> $completion) {
+  public Object clearContacts(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -197,7 +198,7 @@ public final class ContactDao_Impl implements ContactDao {
           __preparedStmtOfClearContacts.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
@@ -254,7 +255,7 @@ public final class ContactDao_Impl implements ContactDao {
   }
 
   @Override
-  public Object getTousLesContactsOnce(final Continuation<? super List<Contact>> $completion) {
+  public Object getTousLesContactsOnce(final Continuation<? super List<Contact>> arg0) {
     final String _sql = "SELECT * FROM contacts ORDER BY nom ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -300,7 +301,48 @@ public final class ContactDao_Impl implements ContactDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
+  }
+
+  @Override
+  public Object countPhone(final String phone, final long exceptId,
+      final Continuation<? super Integer> arg2) {
+    final String _sql = "SELECT COUNT(*) FROM contacts WHERE telephone = ? AND id != ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    if (phone == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, phone);
+    }
+    _argIndex = 2;
+    _statement.bindLong(_argIndex, exceptId);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Integer>() {
+      @Override
+      @NonNull
+      public Integer call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Integer _result;
+          if (_cursor.moveToFirst()) {
+            final Integer _tmp;
+            if (_cursor.isNull(0)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getInt(0);
+            }
+            _result = _tmp;
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, arg2);
   }
 
   @NonNull

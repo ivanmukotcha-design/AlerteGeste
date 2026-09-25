@@ -1,119 +1,99 @@
 package com.butembo.alertgeste.ui.gesture
 
-import android.content.Context
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
+import android.hardware.*
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.*
+import androidx.navigation.fragment.findNavController
+import com.butembo.alertgeste.R
 import com.butembo.alertgeste.databinding.FragmentGestureBinding
+import com.butembo.alertgeste.domain.MotionFilter
+import com.butembo.alertgeste.service.SurveillanceState
+import com.butembo.alertgeste.service.PhoneHaptics
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.math.sqrt
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class GestureFragment : Fragment(), SensorEventListener {
-
     private var _binding: FragmentGestureBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: GestureViewModel by viewModels()
-    
     private lateinit var sensorManager: SensorManager
-    private var accelerometre: Sensor? = null
-    
-    private val alpha = 0.8f
-    private var gravite = FloatArray(3) { 0f }
-
+    private var sensor: Sensor? = null
+    private val filter = MotionFilter()
+    private var sensorResponding = false
+    private var sensorWatchdog: Job? = null
+    private lateinit var haptics: PhoneHaptics
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentGestureBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        
-        sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        accelerometre = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-
-        if (accelerometre == null) {
-            Toast.makeText(requireContext(), "Accéléromètre non disponible sur cet appareil", Toast.LENGTH_LONG).show()
-        }
-
-        setupObservers()
-        
+        sensorManager = requireContext().getSystemService(SensorManager::class.java)
+        haptics = PhoneHaptics(requireContext())
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, true)
+            ?: sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        binding.btnResetCalibration.isEnabled = false
         binding.btnResetCalibration.setOnClickListener {
+            haptics.stop()
+            filter.reset()
             viewModel.commencerEntrainement()
         }
-        
-        // Démarrer automatiquement l'écoute pour la jauge
-        viewModel.commencerEntrainement()
-    }
-
-    private fun setupObservers() {
+        binding.btnDone.setOnClickListener { findNavController().navigateUp() }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.uiState.collect { state ->
-                    binding.tvCount.text = "${state.secoussesDetectees}/3"
-                    
-                    if (state.sauvegardeFait) {
-                        Toast.makeText(requireContext(), "Geste configuré et sauvegardé !", Toast.LENGTH_SHORT).show()
-                    }
-                    
-                    if (state.etape == GestureEtape.TERMINE && !state.sauvegardeFait) {
-                        viewModel.sauvegarderProfil()
-                    }
+                    binding.tvCount.text = getString(R.string.gesture_count, state.secoussesDetectees)
+                    binding.instructions.text = state.message
+                    binding.btnResetCalibration.isEnabled = sensorResponding && !state.saving
+                    binding.btnResetCalibration.setText(when {
+                        state.saving -> R.string.saving_calibration
+                        state.etape == GestureEtape.REPOS -> R.string.start_calibration
+                        else -> R.string.retry_calibration
+                    })
+                    binding.btnDone.visibility = if (state.sauvegardeFait) View.VISIBLE else View.GONE
+                    if (state.sauvegardeFait && viewModel.consumeSaveConfirmation()) haptics.gestureSaved()
                 }
             }
         }
     }
-
     override fun onResume() {
         super.onResume()
-        accelerometre?.let {
-            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
+        SurveillanceState.training.value = true
+        filter.reset()
+        sensorResponding = false
+        binding.btnResetCalibration.isEnabled = false
+        binding.sensorStatus.setText(R.string.sensor_connecting)
+        val registered = sensor?.let { sensorManager.registerListener(this, it, 40_000) } ?: false
+        if (!registered) binding.sensorStatus.setText(R.string.sensor_unavailable)
+        else sensorWatchdog = viewLifecycleOwner.lifecycleScope.launch {
+            delay(2500)
+            if (!sensorResponding) binding.sensorStatus.setText(R.string.sensor_unavailable)
         }
     }
-
     override fun onPause() {
-        super.onPause()
         sensorManager.unregisterListener(this)
+        sensorWatchdog?.cancel()
+        haptics.stop()
+        viewModel.interrompre()
+        SurveillanceState.training.value = false
+        super.onPause()
     }
-
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type != Sensor.TYPE_ACCELEROMETER) return
-
-        // Filtre pour enlever la gravité
-        gravite[0] = alpha * gravite[0] + (1 - alpha) * event.values[0]
-        gravite[1] = alpha * gravite[1] + (1 - alpha) * event.values[1]
-        gravite[2] = alpha * gravite[2] + (1 - alpha) * event.values[2]
-
-        val lx = event.values[0] - gravite[0]
-        val ly = event.values[1] - gravite[1]
-        val lz = event.values[2] - gravite[2]
-
-        val magnitude = sqrt(lx * lx + ly * ly + lz * lz)
-        
-        // Mettre à jour la barre de progression (jauge)
-        binding.progressMagnitude.progress = magnitude.toInt()
-        
-        // Envoyer la valeur au ViewModel pour détection
-        viewModel.onValeurAccelerometre(magnitude)
+        val b = _binding ?: return
+        if (!sensorResponding) {
+            sensorResponding = true
+            b.sensorStatus.setText(R.string.sensor_ready)
+            b.btnResetCalibration.isEnabled = !viewModel.uiState.value.saving
+        }
+        val magnitude = filter.magnitude(event.values[0], event.values[1], event.values[2], event.timestamp)
+        b.progressMagnitude.progress = (magnitude * 6).toInt().coerceIn(0, 100)
+        viewModel.onValeurAccelerometre(magnitude, event.timestamp / 1_000_000)
     }
-
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
+    override fun onDestroyView() { _binding = null; super.onDestroyView() }
 }

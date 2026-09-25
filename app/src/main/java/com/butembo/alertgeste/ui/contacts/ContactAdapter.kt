@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.butembo.alertgeste.data.local.entity.Contact
 import com.butembo.alertgeste.databinding.ItemContactBinding
 
-class ContactAdapter(private val onDeleteClick: (Contact) -> Unit) :
+class ContactAdapter(private val onEditClick: (Contact) -> Unit, private val onDeleteClick: (Contact) -> Unit) :
     ListAdapter<Contact, ContactAdapter.ContactViewHolder>(ContactDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
@@ -25,6 +25,9 @@ class ContactAdapter(private val onDeleteClick: (Contact) -> Unit) :
         fun bind(contact: Contact) {
             binding.tvNom.text = contact.nom
             binding.tvTel.text = contact.telephone
+            binding.root.setOnClickListener { onEditClick(contact) }
+            binding.root.contentDescription = "Modifier ${contact.nom}"
+            binding.btnDelete.contentDescription = "Supprimer ${contact.nom}"
             binding.btnDelete.setOnClickListener { onDeleteClick(contact) }
         }
     }

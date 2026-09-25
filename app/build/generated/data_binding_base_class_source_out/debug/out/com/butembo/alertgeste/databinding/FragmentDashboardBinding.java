@@ -4,35 +4,36 @@ package com.butembo.alertgeste.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.butembo.alertgeste.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
 
 public final class FragmentDashboardBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final ScrollView rootView;
 
   @NonNull
-  public final MaterialCardView btnContacts;
+  public final MaterialButton btnCancelAlert;
 
   @NonNull
-  public final MaterialCardView btnGesture;
+  public final MaterialButton btnContacts;
 
   @NonNull
-  public final MaterialCardView btnHistory;
+  public final MaterialButton btnGesture;
 
   @NonNull
-  public final MaterialCardView btnSettings;
+  public final MaterialButton btnHistory;
+
+  @NonNull
+  public final MaterialButton btnSettings;
 
   @NonNull
   public final MaterialButton btnSosManuel;
@@ -41,35 +42,32 @@ public final class FragmentDashboardBinding implements ViewBinding {
   public final MaterialButton btnToggleSurveillance;
 
   @NonNull
-  public final MaterialCardView cardStatus;
-
-  @NonNull
-  public final ImageView ivStatusIcon;
+  public final TextView tvReadiness;
 
   @NonNull
   public final TextView tvStatusText;
 
-  private FragmentDashboardBinding(@NonNull ConstraintLayout rootView,
-      @NonNull MaterialCardView btnContacts, @NonNull MaterialCardView btnGesture,
-      @NonNull MaterialCardView btnHistory, @NonNull MaterialCardView btnSettings,
-      @NonNull MaterialButton btnSosManuel, @NonNull MaterialButton btnToggleSurveillance,
-      @NonNull MaterialCardView cardStatus, @NonNull ImageView ivStatusIcon,
+  private FragmentDashboardBinding(@NonNull ScrollView rootView,
+      @NonNull MaterialButton btnCancelAlert, @NonNull MaterialButton btnContacts,
+      @NonNull MaterialButton btnGesture, @NonNull MaterialButton btnHistory,
+      @NonNull MaterialButton btnSettings, @NonNull MaterialButton btnSosManuel,
+      @NonNull MaterialButton btnToggleSurveillance, @NonNull TextView tvReadiness,
       @NonNull TextView tvStatusText) {
     this.rootView = rootView;
+    this.btnCancelAlert = btnCancelAlert;
     this.btnContacts = btnContacts;
     this.btnGesture = btnGesture;
     this.btnHistory = btnHistory;
     this.btnSettings = btnSettings;
     this.btnSosManuel = btnSosManuel;
     this.btnToggleSurveillance = btnToggleSurveillance;
-    this.cardStatus = cardStatus;
-    this.ivStatusIcon = ivStatusIcon;
+    this.tvReadiness = tvReadiness;
     this.tvStatusText = tvStatusText;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -94,26 +92,32 @@ public final class FragmentDashboardBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btn_cancel_alert;
+      MaterialButton btnCancelAlert = ViewBindings.findChildViewById(rootView, id);
+      if (btnCancelAlert == null) {
+        break missingId;
+      }
+
       id = R.id.btn_contacts;
-      MaterialCardView btnContacts = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton btnContacts = ViewBindings.findChildViewById(rootView, id);
       if (btnContacts == null) {
         break missingId;
       }
 
       id = R.id.btn_gesture;
-      MaterialCardView btnGesture = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton btnGesture = ViewBindings.findChildViewById(rootView, id);
       if (btnGesture == null) {
         break missingId;
       }
 
       id = R.id.btn_history;
-      MaterialCardView btnHistory = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton btnHistory = ViewBindings.findChildViewById(rootView, id);
       if (btnHistory == null) {
         break missingId;
       }
 
       id = R.id.btn_settings;
-      MaterialCardView btnSettings = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton btnSettings = ViewBindings.findChildViewById(rootView, id);
       if (btnSettings == null) {
         break missingId;
       }
@@ -130,15 +134,9 @@ public final class FragmentDashboardBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.card_status;
-      MaterialCardView cardStatus = ViewBindings.findChildViewById(rootView, id);
-      if (cardStatus == null) {
-        break missingId;
-      }
-
-      id = R.id.iv_status_icon;
-      ImageView ivStatusIcon = ViewBindings.findChildViewById(rootView, id);
-      if (ivStatusIcon == null) {
+      id = R.id.tv_readiness;
+      TextView tvReadiness = ViewBindings.findChildViewById(rootView, id);
+      if (tvReadiness == null) {
         break missingId;
       }
 
@@ -148,8 +146,8 @@ public final class FragmentDashboardBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentDashboardBinding((ConstraintLayout) rootView, btnContacts, btnGesture,
-          btnHistory, btnSettings, btnSosManuel, btnToggleSurveillance, cardStatus, ivStatusIcon,
+      return new FragmentDashboardBinding((ScrollView) rootView, btnCancelAlert, btnContacts,
+          btnGesture, btnHistory, btnSettings, btnSosManuel, btnToggleSurveillance, tvReadiness,
           tvStatusText);
     }
     String missingId = rootView.getResources().getResourceName(id);

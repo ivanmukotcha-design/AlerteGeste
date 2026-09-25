@@ -12,6 +12,7 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.butembo.alertgeste.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import java.lang.NullPointerException;
@@ -21,6 +22,12 @@ import java.lang.String;
 public final class FragmentSettingsBinding implements ViewBinding {
   @NonNull
   private final ScrollView rootView;
+
+  @NonNull
+  public final MaterialButton btnBackground;
+
+  @NonNull
+  public final MaterialButton btnPrivacy;
 
   @NonNull
   public final MaterialButton btnResetApp;
@@ -47,14 +54,21 @@ public final class FragmentSettingsBinding implements ViewBinding {
   public final TextInputLayout layoutTel;
 
   @NonNull
+  public final SwitchMaterial switchReliable;
+
+  @NonNull
   public final TextView title;
 
-  private FragmentSettingsBinding(@NonNull ScrollView rootView, @NonNull MaterialButton btnResetApp,
-      @NonNull MaterialButton btnSave, @NonNull TextInputEditText etMessage,
-      @NonNull TextInputEditText etNom, @NonNull TextInputEditText etTel,
-      @NonNull TextInputLayout layoutMessage, @NonNull TextInputLayout layoutNom,
-      @NonNull TextInputLayout layoutTel, @NonNull TextView title) {
+  private FragmentSettingsBinding(@NonNull ScrollView rootView,
+      @NonNull MaterialButton btnBackground, @NonNull MaterialButton btnPrivacy,
+      @NonNull MaterialButton btnResetApp, @NonNull MaterialButton btnSave,
+      @NonNull TextInputEditText etMessage, @NonNull TextInputEditText etNom,
+      @NonNull TextInputEditText etTel, @NonNull TextInputLayout layoutMessage,
+      @NonNull TextInputLayout layoutNom, @NonNull TextInputLayout layoutTel,
+      @NonNull SwitchMaterial switchReliable, @NonNull TextView title) {
     this.rootView = rootView;
+    this.btnBackground = btnBackground;
+    this.btnPrivacy = btnPrivacy;
     this.btnResetApp = btnResetApp;
     this.btnSave = btnSave;
     this.etMessage = etMessage;
@@ -63,6 +77,7 @@ public final class FragmentSettingsBinding implements ViewBinding {
     this.layoutMessage = layoutMessage;
     this.layoutNom = layoutNom;
     this.layoutTel = layoutTel;
+    this.switchReliable = switchReliable;
     this.title = title;
   }
 
@@ -93,6 +108,18 @@ public final class FragmentSettingsBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btn_background;
+      MaterialButton btnBackground = ViewBindings.findChildViewById(rootView, id);
+      if (btnBackground == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_privacy;
+      MaterialButton btnPrivacy = ViewBindings.findChildViewById(rootView, id);
+      if (btnPrivacy == null) {
+        break missingId;
+      }
+
       id = R.id.btn_reset_app;
       MaterialButton btnResetApp = ViewBindings.findChildViewById(rootView, id);
       if (btnResetApp == null) {
@@ -141,14 +168,21 @@ public final class FragmentSettingsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.switch_reliable;
+      SwitchMaterial switchReliable = ViewBindings.findChildViewById(rootView, id);
+      if (switchReliable == null) {
+        break missingId;
+      }
+
       id = R.id.title;
       TextView title = ViewBindings.findChildViewById(rootView, id);
       if (title == null) {
         break missingId;
       }
 
-      return new FragmentSettingsBinding((ScrollView) rootView, btnResetApp, btnSave, etMessage,
-          etNom, etTel, layoutMessage, layoutNom, layoutTel, title);
+      return new FragmentSettingsBinding((ScrollView) rootView, btnBackground, btnPrivacy,
+          btnResetApp, btnSave, etMessage, etNom, etTel, layoutMessage, layoutNom, layoutTel,
+          switchReliable, title);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

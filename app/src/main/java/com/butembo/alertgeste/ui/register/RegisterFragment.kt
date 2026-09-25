@@ -1,9 +1,7 @@
 package com.butembo.alertgeste.ui.register
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -13,45 +11,32 @@ import com.butembo.alertgeste.data.local.entity.Utilisateur
 import com.butembo.alertgeste.data.repository.AlertGesteRepository
 import com.butembo.alertgeste.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
-
     private var _binding: FragmentRegisterBinding? = null
-    private val binding get() = _binding!!
-
     @Inject lateinit var repository: AlertGesteRepository
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        return binding.root
+        return _binding!!.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+        val binding = _binding!!
         binding.btnSave.setOnClickListener {
-            val nom = binding.etNom.text.toString().trim()
-            val tel = binding.etTel.text.toString().trim()
-            val msg = binding.etMessage.text.toString().trim()
-
-            if (nom.isEmpty() || tel.isEmpty()) {
-                Toast.makeText(requireContext(), "Veuillez remplir les champs obligatoires", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            lifecycleScope.launch {
-                val user = Utilisateur(nom = nom, telephone = tel, messageAlerte = msg)
-                repository.enregistrerUtilisateur(user)
-                findNavController().navigate(R.id.action_register_to_dashboard)
+            val user = Utilisateur(nom = binding.etNom.text.toString(), telephone = binding.etTel.text.toString(), messageAlerte = binding.etMessage.text.toString())
+            binding.btnSave.isEnabled = false
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    repository.enregistrerUtilisateur(user)
+                    findNavController().navigate(R.id.action_register_to_dashboard)
+                } catch (e: CancellationException) { throw e }
+                catch (e: Exception) { Toast.makeText(requireContext(), e.message ?: "Enregistrement impossible.", Toast.LENGTH_LONG).show() }
+                finally { _binding?.btnSave?.isEnabled = true }
             }
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    override fun onDestroyView() { _binding = null; super.onDestroyView() }
 }

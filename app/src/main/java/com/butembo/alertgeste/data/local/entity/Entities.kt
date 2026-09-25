@@ -2,6 +2,9 @@ package com.butembo.alertgeste.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.ColumnInfo
+import androidx.room.ForeignKey
+import androidx.room.Index
 
 @Entity(tableName = "utilisateurs")
 data class Utilisateur(
@@ -42,5 +45,21 @@ data class Alerte(
     val latitude: Double?,
     val longitude: Double?,
     val statut: String, // "ENVOYEE", "ANNULEE", "ECHEC"
-    val contactsNotifies: String // JSON ou liste séparée par virgules
+    val contactsNotifies: String,
+    @ColumnInfo(defaultValue = "''") val detail: String = ""
+)
+
+@Entity(
+    tableName = "sms_parts",
+    foreignKeys = [ForeignKey(entity = Alerte::class, parentColumns = ["id"], childColumns = ["alerteId"], onDelete = ForeignKey.CASCADE)],
+    indices = [Index("alerteId")]
+)
+data class SmsPart(
+    @PrimaryKey val id: String,
+    val alerteId: Long,
+    val contactId: Long,
+    val nom: String,
+    val telephone: String,
+    val partIndex: Int,
+    val statut: String = "EN_ATTENTE"
 )

@@ -11,7 +11,7 @@ class AlertGesteApp : Application() {
 
     companion object {
         const val CHANNEL_SURVEILLANCE = "channel_surveillance"
-        const val CHANNEL_ALERTE = "channel_alerte"
+        const val CHANNEL_ALERTE = "channel_alerte_silent_v2"
     }
 
     override fun onCreate() {
@@ -37,9 +37,12 @@ class AlertGesteApp : Application() {
             val canalAlerte = NotificationChannel(
                 CHANNEL_ALERTE,
                 "Alertes d'urgence",
-                NotificationManager.IMPORTANCE_HIGH
+                NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
                 description = "Notifications d'alerte d'urgence"
+                setSound(null, null)
+                enableVibration(false)
+                lockscreenVisibility = android.app.Notification.VISIBILITY_PRIVATE
             }
 
             manager.createNotificationChannel(canalSurveillance)

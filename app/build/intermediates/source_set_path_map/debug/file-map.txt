@@ -54,10 +54,10 @@ com.butembo.alertgeste.app-constraintlayout-2.1.4-52 C:\Users\ivan\.gradle\cache
 com.butembo.alertgeste.app-jetified-hilt-navigation-fragment-1.1.0-53 C:\Users\ivan\.gradle\caches\transforms-3\ee83254214b0653e5c93277a0ac53305\transformed\jetified-hilt-navigation-fragment-1.1.0\res
 com.butembo.alertgeste.app-jetified-lifecycle-livedata-ktx-2.7.0-54 C:\Users\ivan\.gradle\caches\transforms-3\f0ee503414ffd79b992a293c47fe1c69\transformed\jetified-lifecycle-livedata-ktx-2.7.0\res
 com.butembo.alertgeste.app-lifecycle-livedata-core-2.7.0-55 C:\Users\ivan\.gradle\caches\transforms-3\f88425924514bcae0bf8334680320a4a\transformed\lifecycle-livedata-core-2.7.0\res
-com.butembo.alertgeste.app-pngs-56 C:\Users\ivan\Desktop\FLUTTER PROJECTS\AlertGeste\app\build\generated\res\pngs\debug
-com.butembo.alertgeste.app-resValues-57 C:\Users\ivan\Desktop\FLUTTER PROJECTS\AlertGeste\app\build\generated\res\resValues\debug
-com.butembo.alertgeste.app-packageDebugResources-58 C:\Users\ivan\Desktop\FLUTTER PROJECTS\AlertGeste\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.butembo.alertgeste.app-packageDebugResources-59 C:\Users\ivan\Desktop\FLUTTER PROJECTS\AlertGeste\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.butembo.alertgeste.app-merged_res-60 C:\Users\ivan\Desktop\FLUTTER PROJECTS\AlertGeste\app\build\intermediates\merged_res\debug
-com.butembo.alertgeste.app-debug-61 C:\Users\ivan\Desktop\FLUTTER PROJECTS\AlertGeste\app\src\debug\res
-com.butembo.alertgeste.app-main-62 C:\Users\ivan\Desktop\FLUTTER PROJECTS\AlertGeste\app\src\main\res
+com.butembo.alertgeste.app-pngs-56 E:\FLUTTER PROJECTS\AlertGeste\app\build\generated\res\pngs\debug
+com.butembo.alertgeste.app-resValues-57 E:\FLUTTER PROJECTS\AlertGeste\app\build\generated\res\resValues\debug
+com.butembo.alertgeste.app-packageDebugResources-58 E:\FLUTTER PROJECTS\AlertGeste\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.butembo.alertgeste.app-packageDebugResources-59 E:\FLUTTER PROJECTS\AlertGeste\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.butembo.alertgeste.app-merged_res-60 E:\FLUTTER PROJECTS\AlertGeste\app\build\intermediates\merged_res\debug
+com.butembo.alertgeste.app-debug-61 E:\FLUTTER PROJECTS\AlertGeste\app\src\debug\res
+com.butembo.alertgeste.app-main-62 E:\FLUTTER PROJECTS\AlertGeste\app\src\main\res

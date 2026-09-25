@@ -39,6 +39,8 @@ public final class UtilisateurDao_Impl implements UtilisateurDao {
 
   private final SharedSQLiteStatement __preparedStmtOfClearUtilisateurs;
 
+  private final SharedSQLiteStatement __preparedStmtOfSetSurveillance;
+
   public UtilisateurDao_Impl(@NonNull final RoomDatabase __db) {
     this.__db = __db;
     this.__insertionAdapterOfUtilisateur = new EntityInsertionAdapter<Utilisateur>(__db) {
@@ -110,11 +112,19 @@ public final class UtilisateurDao_Impl implements UtilisateurDao {
         return _query;
       }
     };
+    this.__preparedStmtOfSetSurveillance = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "UPDATE utilisateurs SET surveillanceActive = ?";
+        return _query;
+      }
+    };
   }
 
   @Override
   public Object insertUtilisateur(final Utilisateur utilisateur,
-      final Continuation<? super Unit> $completion) {
+      final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -128,12 +138,12 @@ public final class UtilisateurDao_Impl implements UtilisateurDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
   public Object updateUtilisateur(final Utilisateur utilisateur,
-      final Continuation<? super Unit> $completion) {
+      final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -147,11 +157,11 @@ public final class UtilisateurDao_Impl implements UtilisateurDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object clearUtilisateurs(final Continuation<? super Unit> $completion) {
+  public Object clearUtilisateurs(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -170,12 +180,38 @@ public final class UtilisateurDao_Impl implements UtilisateurDao {
           __preparedStmtOfClearUtilisateurs.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
+  }
+
+  @Override
+  public Object setSurveillance(final boolean active, final Continuation<? super Unit> arg1) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfSetSurveillance.acquire();
+        int _argIndex = 1;
+        final int _tmp = active ? 1 : 0;
+        _stmt.bindLong(_argIndex, _tmp);
+        try {
+          __db.beginTransaction();
+          try {
+            _stmt.executeUpdateDelete();
+            __db.setTransactionSuccessful();
+            return Unit.INSTANCE;
+          } finally {
+            __db.endTransaction();
+          }
+        } finally {
+          __preparedStmtOfSetSurveillance.release(_stmt);
+        }
+      }
+    }, arg1);
   }
 
   @Override
   public Flow<Utilisateur> getUtilisateur() {
-    final String _sql = "SELECT * FROM utilisateurs LIMIT 1";
+    final String _sql = "SELECT * FROM utilisateurs ORDER BY id ASC LIMIT 1";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"utilisateurs"}, new Callable<Utilisateur>() {
       @Override
@@ -232,8 +268,8 @@ public final class UtilisateurDao_Impl implements UtilisateurDao {
   }
 
   @Override
-  public Object getUtilisateurOnce(final Continuation<? super Utilisateur> $completion) {
-    final String _sql = "SELECT * FROM utilisateurs LIMIT 1";
+  public Object getUtilisateurOnce(final Continuation<? super Utilisateur> arg0) {
+    final String _sql = "SELECT * FROM utilisateurs ORDER BY id ASC LIMIT 1";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
     return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Utilisateur>() {
@@ -283,7 +319,7 @@ public final class UtilisateurDao_Impl implements UtilisateurDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @NonNull

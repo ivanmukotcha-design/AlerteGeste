@@ -1,0 +1,15 @@
+<resources>
+    <color name="colorPrimary">#A2D9CD</color>
+    <color name="colorSecondary">#A2D9CD</color>
+    <color name="colorOnPrimary">#123D35</color>
+    <color name="colorBackground">#101C24</color>
+    <color name="colorSurface">#1B2B35</color>
+    <color name="colorSurfaceTint">#233F3C</color>
+    <color name="colorText">#ECF2F4</color>
+    <color name="colorTextSecondary">#B3C4CD</color>
+    <color name="colorOutline">#465C68</color>
+    <color name="colorDanger">#FFB3BA</color>
+    <color name="colorSuccess">#A2D9BA</color>
+    <color name="colorWarning">#F3CA84</color>
+    <color name="purple_700">#A2D9CD</color>
+</resources>

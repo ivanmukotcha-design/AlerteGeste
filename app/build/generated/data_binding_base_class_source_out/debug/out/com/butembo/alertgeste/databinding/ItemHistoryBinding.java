@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.butembo.alertgeste.R;
@@ -20,6 +21,9 @@ public final class ItemHistoryBinding implements ViewBinding {
   private final MaterialCardView rootView;
 
   @NonNull
+  public final AppCompatImageButton btnDelete;
+
+  @NonNull
   public final TextView tvContacts;
 
   @NonNull
@@ -28,9 +32,11 @@ public final class ItemHistoryBinding implements ViewBinding {
   @NonNull
   public final TextView tvStatus;
 
-  private ItemHistoryBinding(@NonNull MaterialCardView rootView, @NonNull TextView tvContacts,
+  private ItemHistoryBinding(@NonNull MaterialCardView rootView,
+      @NonNull AppCompatImageButton btnDelete, @NonNull TextView tvContacts,
       @NonNull TextView tvDate, @NonNull TextView tvStatus) {
     this.rootView = rootView;
+    this.btnDelete = btnDelete;
     this.tvContacts = tvContacts;
     this.tvDate = tvDate;
     this.tvStatus = tvStatus;
@@ -63,6 +69,12 @@ public final class ItemHistoryBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btn_delete;
+      AppCompatImageButton btnDelete = ViewBindings.findChildViewById(rootView, id);
+      if (btnDelete == null) {
+        break missingId;
+      }
+
       id = R.id.tv_contacts;
       TextView tvContacts = ViewBindings.findChildViewById(rootView, id);
       if (tvContacts == null) {
@@ -81,7 +93,8 @@ public final class ItemHistoryBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemHistoryBinding((MaterialCardView) rootView, tvContacts, tvDate, tvStatus);
+      return new ItemHistoryBinding((MaterialCardView) rootView, btnDelete, tvContacts, tvDate,
+          tvStatus);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

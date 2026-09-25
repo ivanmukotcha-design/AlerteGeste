@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 import com.butembo.alertgeste.data.local.entity.Contact
 import com.butembo.alertgeste.databinding.DialogContactFormBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -69,10 +72,16 @@ class ContactFormDialog : BottomSheetDialogFragment() {
                 relation = relation
             )
 
-            if (isEdit) viewModel.mettreAJourContact(contact)
-            else viewModel.ajouterContact(contact)
-
-            dismiss()
+            binding.btnSauvegarder.isEnabled = false
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    viewModel.save(contact)
+                    dismiss()
+                } catch (e: CancellationException) { throw e }
+                catch (e: Exception) {
+                    Toast.makeText(requireContext(), e.message ?: "Sauvegarde impossible", Toast.LENGTH_LONG).show()
+                } finally { _binding?.btnSauvegarder?.isEnabled = true }
+            }
         }
 
         binding.btnAnnuler.setOnClickListener { dismiss() }

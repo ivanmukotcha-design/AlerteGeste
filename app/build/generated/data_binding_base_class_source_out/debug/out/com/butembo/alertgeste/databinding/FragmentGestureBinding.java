@@ -4,15 +4,14 @@ package com.butembo.alertgeste.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.butembo.alertgeste.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -20,13 +19,13 @@ import java.lang.String;
 
 public final class FragmentGestureBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final ScrollView rootView;
+
+  @NonNull
+  public final MaterialButton btnDone;
 
   @NonNull
   public final MaterialButton btnResetCalibration;
-
-  @NonNull
-  public final MaterialCardView cardProgress;
 
   @NonNull
   public final TextView instructions;
@@ -35,27 +34,31 @@ public final class FragmentGestureBinding implements ViewBinding {
   public final LinearProgressIndicator progressMagnitude;
 
   @NonNull
+  public final TextView sensorStatus;
+
+  @NonNull
   public final TextView title;
 
   @NonNull
   public final TextView tvCount;
 
-  private FragmentGestureBinding(@NonNull ConstraintLayout rootView,
-      @NonNull MaterialButton btnResetCalibration, @NonNull MaterialCardView cardProgress,
-      @NonNull TextView instructions, @NonNull LinearProgressIndicator progressMagnitude,
+  private FragmentGestureBinding(@NonNull ScrollView rootView, @NonNull MaterialButton btnDone,
+      @NonNull MaterialButton btnResetCalibration, @NonNull TextView instructions,
+      @NonNull LinearProgressIndicator progressMagnitude, @NonNull TextView sensorStatus,
       @NonNull TextView title, @NonNull TextView tvCount) {
     this.rootView = rootView;
+    this.btnDone = btnDone;
     this.btnResetCalibration = btnResetCalibration;
-    this.cardProgress = cardProgress;
     this.instructions = instructions;
     this.progressMagnitude = progressMagnitude;
+    this.sensorStatus = sensorStatus;
     this.title = title;
     this.tvCount = tvCount;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -80,15 +83,15 @@ public final class FragmentGestureBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.btn_reset_calibration;
-      MaterialButton btnResetCalibration = ViewBindings.findChildViewById(rootView, id);
-      if (btnResetCalibration == null) {
+      id = R.id.btn_done;
+      MaterialButton btnDone = ViewBindings.findChildViewById(rootView, id);
+      if (btnDone == null) {
         break missingId;
       }
 
-      id = R.id.card_progress;
-      MaterialCardView cardProgress = ViewBindings.findChildViewById(rootView, id);
-      if (cardProgress == null) {
+      id = R.id.btn_reset_calibration;
+      MaterialButton btnResetCalibration = ViewBindings.findChildViewById(rootView, id);
+      if (btnResetCalibration == null) {
         break missingId;
       }
 
@@ -104,6 +107,12 @@ public final class FragmentGestureBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.sensor_status;
+      TextView sensorStatus = ViewBindings.findChildViewById(rootView, id);
+      if (sensorStatus == null) {
+        break missingId;
+      }
+
       id = R.id.title;
       TextView title = ViewBindings.findChildViewById(rootView, id);
       if (title == null) {
@@ -116,8 +125,8 @@ public final class FragmentGestureBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentGestureBinding((ConstraintLayout) rootView, btnResetCalibration,
-          cardProgress, instructions, progressMagnitude, title, tvCount);
+      return new FragmentGestureBinding((ScrollView) rootView, btnDone, btnResetCalibration,
+          instructions, progressMagnitude, sensorStatus, title, tvCount);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

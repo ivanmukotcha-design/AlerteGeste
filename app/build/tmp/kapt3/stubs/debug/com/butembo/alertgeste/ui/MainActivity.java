@@ -1,6 +1,11 @@
 package com.butembo.alertgeste.ui;
 
 import android.os.Bundle;
+import android.content.res.Configuration;
+import android.view.View;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.fragment.NavHostFragment;
 import com.butembo.alertgeste.R;

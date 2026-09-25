@@ -4,10 +4,10 @@ package com.butembo.alertgeste.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.butembo.alertgeste.R;
@@ -19,7 +19,7 @@ import java.lang.String;
 
 public final class DialogContactFormBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final NestedScrollView rootView;
 
   @NonNull
   public final MaterialButton btnAnnuler;
@@ -39,7 +39,7 @@ public final class DialogContactFormBinding implements ViewBinding {
   @NonNull
   public final TextView tvTitreDialog;
 
-  private DialogContactFormBinding(@NonNull LinearLayout rootView,
+  private DialogContactFormBinding(@NonNull NestedScrollView rootView,
       @NonNull MaterialButton btnAnnuler, @NonNull MaterialButton btnSauvegarder,
       @NonNull TextInputEditText etNomContact, @NonNull TextInputEditText etRelationContact,
       @NonNull TextInputEditText etTelContact, @NonNull TextView tvTitreDialog) {
@@ -54,7 +54,7 @@ public final class DialogContactFormBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public NestedScrollView getRoot() {
     return rootView;
   }
 
@@ -115,7 +115,7 @@ public final class DialogContactFormBinding implements ViewBinding {
         break missingId;
       }
 
-      return new DialogContactFormBinding((LinearLayout) rootView, btnAnnuler, btnSauvegarder,
+      return new DialogContactFormBinding((NestedScrollView) rootView, btnAnnuler, btnSauvegarder,
           etNomContact, etRelationContact, etTelContact, tvTitreDialog);
     }
     String missingId = rootView.getResources().getResourceName(id);

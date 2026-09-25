@@ -2,6 +2,7 @@ package com.butembo.alertgeste;
 
 import com.butembo.alertgeste.di.AppModule;
 import com.butembo.alertgeste.receiver.BootReceiver_GeneratedInjector;
+import com.butembo.alertgeste.receiver.SmsResultReceiver_GeneratedInjector;
 import com.butembo.alertgeste.service.SurveillanceService_GeneratedInjector;
 import com.butembo.alertgeste.ui.MainActivity_GeneratedInjector;
 import com.butembo.alertgeste.ui.contacts.ContactFormDialog_GeneratedInjector;
@@ -153,6 +154,7 @@ public final class AlertGesteApp_HiltComponents {
   @Singleton
   public abstract static class SingletonC implements AlertGesteApp_GeneratedInjector,
       BootReceiver_GeneratedInjector,
+      SmsResultReceiver_GeneratedInjector,
       FragmentGetContextFix.FragmentGetContextFixEntryPoint,
       HiltWrapper_ActivityRetainedComponentManager_ActivityRetainedComponentBuilderEntryPoint,
       ServiceComponentManager.ServiceComponentBuilderEntryPoint,

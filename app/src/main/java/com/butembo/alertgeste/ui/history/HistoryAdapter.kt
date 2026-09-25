@@ -9,8 +9,12 @@ import com.butembo.alertgeste.data.local.entity.Alerte
 import com.butembo.alertgeste.databinding.ItemHistoryBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import com.butembo.alertgeste.domain.AlertStatus
+import com.butembo.alertgeste.R
+import androidx.core.content.ContextCompat
 
-class HistoryAdapter : ListAdapter<Alerte, HistoryAdapter.HistoryViewHolder>(AlerteDiffCallback()) {
+class HistoryAdapter(private val onDelete: (Alerte) -> Unit) :
+    ListAdapter<Alerte, HistoryAdapter.HistoryViewHolder>(AlerteDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,16 +32,31 @@ class HistoryAdapter : ListAdapter<Alerte, HistoryAdapter.HistoryViewHolder>(Ale
 
         fun bind(alerte: Alerte) {
             binding.tvDate.text = sdf.format(Date(alerte.horodatage))
-            binding.tvStatus.text = alerte.statut
-            binding.tvContacts.text = "Notifiés : ${alerte.contactsNotifies}"
+            binding.btnDelete.apply {
+                isEnabled = !AlertStatus.isInProgress(alerte.statut)
+                alpha = if (isEnabled) 1f else 0.35f
+                contentDescription = if (isEnabled)
+                    context.getString(R.string.history_delete_description, binding.tvDate.text)
+                else context.getString(R.string.history_delete_in_progress)
+                setOnClickListener { onDelete(alerte) }
+            }
+            binding.tvStatus.text = AlertStatus.label(alerte.statut)
+            binding.tvContacts.text = buildString {
+                if (alerte.contactsNotifies.isNotBlank()) append("SMS confirmés : ${alerte.contactsNotifies}\n")
+                append(alerte.detail)
+                if (alerte.latitude != null && alerte.longitude != null)
+                    append("\nPosition : ${alerte.latitude}, ${alerte.longitude}")
+            }
             
             // Couleur selon statut
             val color = when(alerte.statut) {
-                "ENVOYEE" -> 0xFF27AE60.toInt()
-                "ANNULEE" -> 0xFFF39C12.toInt()
-                else -> 0xFFE74C3C.toInt()
+                AlertStatus.SENT -> R.color.colorSuccess
+                AlertStatus.CANCELLED -> R.color.colorTextSecondary
+                AlertStatus.COUNTDOWN, AlertStatus.LOCATING, AlertStatus.SENDING -> R.color.colorPrimary
+                AlertStatus.PARTIAL, AlertStatus.UNKNOWN, AlertStatus.INTERRUPTED -> R.color.colorWarning
+                else -> R.color.colorDanger
             }
-            binding.tvStatus.setTextColor(color)
+            binding.tvStatus.setTextColor(ContextCompat.getColor(binding.root.context, color))
         }
     }
 

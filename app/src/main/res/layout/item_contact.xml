@@ -5,19 +5,24 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="4dp"
     android:layout_marginVertical="4dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    android:focusable="true"
+    android:clickable="true"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <ImageView
+            android:importantForAccessibility="no"
+            android:contentDescription="@null"
             android:id="@+id/iv_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@android:drawable/ic_menu_my_calendar"
+            android:padding="6dp"
+            android:src="@drawable/ic_people_outline"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,11 +45,15 @@
             android:layout_height="wrap_content"
             android:text="+243 000 000 000"
             android:textSize="14sp"
+            android:textColor="@color/colorTextSecondary"
             app:layout_constraintEnd_toStartOf="@id/btn_delete"
             app:layout_constraintStart_toStartOf="@id/tv_nom"
             app:layout_constraintTop_toBottomOf="@id/tv_nom" />
 
         <ImageButton
+            android:contentDescription="Supprimer ce contact"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

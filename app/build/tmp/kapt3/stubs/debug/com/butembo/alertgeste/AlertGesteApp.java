@@ -12,7 +12,7 @@ public final class AlertGesteApp extends android.app.Application {
     @org.jetbrains.annotations.NotNull()
     public static final java.lang.String CHANNEL_SURVEILLANCE = "channel_surveillance";
     @org.jetbrains.annotations.NotNull()
-    public static final java.lang.String CHANNEL_ALERTE = "channel_alerte";
+    public static final java.lang.String CHANNEL_ALERTE = "channel_alerte_silent_v2";
     @org.jetbrains.annotations.NotNull()
     public static final com.butembo.alertgeste.AlertGesteApp.Companion Companion = null;
     

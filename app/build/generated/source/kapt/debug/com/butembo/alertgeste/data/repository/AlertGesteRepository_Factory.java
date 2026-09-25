@@ -1,9 +1,6 @@
 package com.butembo.alertgeste.data.repository;
 
-import com.butembo.alertgeste.data.local.dao.AlerteDao;
-import com.butembo.alertgeste.data.local.dao.ContactDao;
-import com.butembo.alertgeste.data.local.dao.GesteProfilDao;
-import com.butembo.alertgeste.data.local.dao.UtilisateurDao;
+import com.butembo.alertgeste.data.local.AlertGesteDatabase;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
@@ -25,36 +22,22 @@ import javax.inject.Provider;
     "KotlinInternalInJava"
 })
 public final class AlertGesteRepository_Factory implements Factory<AlertGesteRepository> {
-  private final Provider<UtilisateurDao> utilisateurDaoProvider;
+  private final Provider<AlertGesteDatabase> dbProvider;
 
-  private final Provider<ContactDao> contactDaoProvider;
-
-  private final Provider<GesteProfilDao> gesteProfilDaoProvider;
-
-  private final Provider<AlerteDao> alerteDaoProvider;
-
-  public AlertGesteRepository_Factory(Provider<UtilisateurDao> utilisateurDaoProvider,
-      Provider<ContactDao> contactDaoProvider, Provider<GesteProfilDao> gesteProfilDaoProvider,
-      Provider<AlerteDao> alerteDaoProvider) {
-    this.utilisateurDaoProvider = utilisateurDaoProvider;
-    this.contactDaoProvider = contactDaoProvider;
-    this.gesteProfilDaoProvider = gesteProfilDaoProvider;
-    this.alerteDaoProvider = alerteDaoProvider;
+  public AlertGesteRepository_Factory(Provider<AlertGesteDatabase> dbProvider) {
+    this.dbProvider = dbProvider;
   }
 
   @Override
   public AlertGesteRepository get() {
-    return newInstance(utilisateurDaoProvider.get(), contactDaoProvider.get(), gesteProfilDaoProvider.get(), alerteDaoProvider.get());
+    return newInstance(dbProvider.get());
   }
 
-  public static AlertGesteRepository_Factory create(Provider<UtilisateurDao> utilisateurDaoProvider,
-      Provider<ContactDao> contactDaoProvider, Provider<GesteProfilDao> gesteProfilDaoProvider,
-      Provider<AlerteDao> alerteDaoProvider) {
-    return new AlertGesteRepository_Factory(utilisateurDaoProvider, contactDaoProvider, gesteProfilDaoProvider, alerteDaoProvider);
+  public static AlertGesteRepository_Factory create(Provider<AlertGesteDatabase> dbProvider) {
+    return new AlertGesteRepository_Factory(dbProvider);
   }
 
-  public static AlertGesteRepository newInstance(UtilisateurDao utilisateurDao,
-      ContactDao contactDao, GesteProfilDao gesteProfilDao, AlerteDao alerteDao) {
-    return new AlertGesteRepository(utilisateurDao, contactDao, gesteProfilDao, alerteDao);
+  public static AlertGesteRepository newInstance(AlertGesteDatabase db) {
+    return new AlertGesteRepository(db);
   }
 }

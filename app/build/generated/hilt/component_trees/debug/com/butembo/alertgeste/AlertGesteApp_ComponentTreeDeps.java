@@ -20,6 +20,7 @@ import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_compo
 import hilt_aggregated_deps._com_butembo_alertgeste_AlertGesteApp_GeneratedInjector;
 import hilt_aggregated_deps._com_butembo_alertgeste_di_AppModule;
 import hilt_aggregated_deps._com_butembo_alertgeste_receiver_BootReceiver_GeneratedInjector;
+import hilt_aggregated_deps._com_butembo_alertgeste_receiver_SmsResultReceiver_GeneratedInjector;
 import hilt_aggregated_deps._com_butembo_alertgeste_service_SurveillanceService_GeneratedInjector;
 import hilt_aggregated_deps._com_butembo_alertgeste_ui_MainActivity_GeneratedInjector;
 import hilt_aggregated_deps._com_butembo_alertgeste_ui_contacts_ContactFormDialog_GeneratedInjector;
@@ -87,6 +88,7 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_Ac
         _com_butembo_alertgeste_AlertGesteApp_GeneratedInjector.class,
         _com_butembo_alertgeste_di_AppModule.class,
         _com_butembo_alertgeste_receiver_BootReceiver_GeneratedInjector.class,
+        _com_butembo_alertgeste_receiver_SmsResultReceiver_GeneratedInjector.class,
         _com_butembo_alertgeste_service_SurveillanceService_GeneratedInjector.class,
         _com_butembo_alertgeste_ui_MainActivity_GeneratedInjector.class,
         _com_butembo_alertgeste_ui_contacts_ContactFormDialog_GeneratedInjector.class,

@@ -3,6 +3,7 @@ package com.butembo.alertgeste.ui.gesture;
 import androidx.lifecycle.ViewModel;
 import com.butembo.alertgeste.data.local.entity.GesteProfil;
 import com.butembo.alertgeste.data.repository.AlertGesteRepository;
+import com.butembo.alertgeste.domain.ShakeCalibration;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import javax.inject.Inject;
 
